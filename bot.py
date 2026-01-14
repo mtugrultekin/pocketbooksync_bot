@@ -72,6 +72,16 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
     await update.message.reply_text(welcome_text, parse_mode='Markdown')
 
+async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    help_text = (
+        "🆘 **Yardım Menüsü**\n\n"
+        "1. 📎 **Dosya Gönder:** Sohbet ekranına kitabınızı sürükleyip bırakın.\n"
+        "2. ⏳ **Bekle:** Bot dosyayı indirip Dropbox'a yükleyecektir.\n"
+        "3. 📲 **Senkronize Et:** PocketBook cihazınızda Wi-Fi'yi açıp 'Senkronize Et' tuşuna basın.\n\n"
+        "❓ *Sorun mu var?* Dosya isminin çok uzun olmadığından ve Türkçe karakter içermediğinden emin olun (Bot bunları düzeltir ama yine de dikkatli olun)."
+    )
+    await update.message.reply_text(help_text, parse_mode='Markdown')
+
 async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
     document = update.message.document
     file_name = document.file_name
@@ -204,6 +214,7 @@ if __name__ == '__main__':
     
     # Handlers
     application.add_handler(CommandHandler("start", start_command))
+    application.add_handler(CommandHandler("help", help_command))
     application.add_handler(MessageHandler(filters.Document.ALL, handle_document))
     
     print("Bot calisiyor (Cloud/Local Mode)...")
